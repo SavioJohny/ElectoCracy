@@ -50,6 +50,91 @@ include dirname(__DIR__) . '/includes/header.php';
         </div>
     </div>
 
+<<<<<<< HEAD
+=======
+    <!-- Class Elections Disqualifications -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-users me-2"></i>Class Election Disqualifications
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <?php if (empty($class_elections)): ?>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No class elections found for <?php echo $current_year; ?>.
+                        </div>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Total Students</th>
+                                        <th>Disqualified</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($class_elections as $election): ?>
+                                        <?php
+                                        // Get total students in class
+                                        $stmt = $pdo->prepare("
+                                            SELECT COUNT(*) as total_students
+                                            FROM users u
+                                            JOIN roles r ON u.role_id = r.role_id
+                                            WHERE u.class_id = ? AND r.role_name = 'Student'
+                                        ");
+                                        $stmt->execute([$election['class_id']]);
+                                        $total_students = $stmt->fetchColumn();
+
+                                        // Get disqualified students for this election
+                                        $stmt = $pdo->prepare("
+                                            SELECT COUNT(*) as disqualified_count
+                                            FROM election_disqualifications
+                                            WHERE election_id = ?
+                                        ");
+                                        $stmt->execute([$election['election_id']]);
+                                        $disqualified_count = $stmt->fetchColumn();
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <strong><?php echo htmlspecialchars($election['class_name']); ?></strong>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($election['department_name']); ?></td>
+                                            <td>
+                                                <span class="badge bg-<?php 
+                                                    echo $election['voting_status'] === 'ended' ? 'success' : 
+                                                        ($election['voting_status'] === 'active' ? 'primary' : 'secondary'); 
+                                                ?>">
+                                                    <?php echo ucfirst(str_replace('_', ' ', $election['voting_status'])); ?>
+                                                </span>
+                                            </td>
+                                            <td><span class="badge bg-info"><?php echo $total_students; ?></span></td>
+                                            <td><span class="badge bg-danger"><?php echo $disqualified_count; ?></span></td>
+                                            <td>
+                                                <a href="class_disqualifications.php?election_id=<?php echo $election['election_id']; ?>" 
+                                                   class="btn btn-sm btn-outline-primary" title="Manage Disqualifications">
+                                                    <i class="fas fa-user-slash me-1"></i>Manage
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
     <!-- Union Elections Disqualifications -->
     <div class="row mb-4">
         <div class="col-12">
@@ -133,6 +218,7 @@ include dirname(__DIR__) . '/includes/header.php';
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Class Elections Disqualifications -->
     <div class="row mb-4">
         <div class="col-12">
@@ -354,4 +440,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+=======
+</div>
+
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
 <?php include dirname(__DIR__) . '/includes/footer.php'; ?>

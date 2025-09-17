@@ -119,6 +119,7 @@
                         <div class="social-links">
                             <h6 class="mb-2">Follow Me</h6>
                             <div class="d-flex gap-2">
+<<<<<<< HEAD
                                 <a href="https://github.com/SavioJohny" class="btn btn-outline-light btn-sm social-btn" 
                                    aria-label="Follow me on GitHub" title="GitHub">
                                     <i class="fab fa-github" aria-hidden="true"></i>
@@ -128,6 +129,17 @@
                                     <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                                 </a>
                                 <a href="https://www.instagram.com/thesaviojohny" class="btn btn-outline-light btn-sm social-btn" 
+=======
+                                <a href="#" class="btn btn-outline-light btn-sm social-btn" 
+                                   aria-label="Follow me on GitHub" title="GitHub">
+                                    <i class="fab fa-github" aria-hidden="true"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-light btn-sm social-btn" 
+                                   aria-label="Follow me on LinkedIn" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-light btn-sm social-btn" 
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
                                    aria-label="Follow me on Instagram" title="Instagram">
                                     <i class="fab fa-instagram" aria-hidden="true"></i>
                                 </a>

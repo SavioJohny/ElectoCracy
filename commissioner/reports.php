@@ -50,6 +50,128 @@ include dirname(__DIR__) . '/includes/header.php';
         </div>
     </div>
 
+<<<<<<< HEAD
+=======
+    <!-- Class Elections Reports -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-users me-2"></i>Class Election Reports
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <?php if (empty($class_elections)): ?>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No class elections found for <?php echo $current_year; ?>.
+                        </div>
+                    <?php else: ?>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <?php
+                                // Check if all class elections have ended
+                                $all_class_ended = true;
+                                foreach ($class_elections as $election) {
+                                    if ($election['voting_status'] !== 'ended') {
+                                        $all_class_ended = false;
+                                        break;
+                                    }
+                                }
+                                ?>
+                                <?php if ($all_class_ended): ?>
+                                    <button class="btn btn-success w-100" onclick="generateAllClassReports()">
+                                        <i class="fas fa-download me-2"></i>Download All Class Reports
+                                    </button>
+                                <?php else: ?>
+                                    <button class="btn btn-outline-secondary w-100" disabled title="Some class elections have not ended yet">
+                                        <i class="fas fa-download me-2"></i>Download All Class Reports
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Total Students</th>
+                                        <th>Candidates</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($class_elections as $election): ?>
+                                        <?php
+                                        // Get total students in class
+                                        $stmt = $pdo->prepare("
+                                            SELECT COUNT(*) as total_students
+                                            FROM users u
+                                            JOIN roles r ON u.role_id = r.role_id
+                                            WHERE u.class_id = ? AND r.role_name = 'Student'
+                                        ");
+                                        $stmt->execute([$election['class_id']]);
+                                        $total_students = $stmt->fetchColumn();
+
+                                        // Get total candidates
+                                        $stmt = $pdo->prepare("
+                                            SELECT COUNT(*) as total_candidates
+                                            FROM candidates
+                                            WHERE election_id = ? AND is_approved = 'approved'
+                                        ");
+                                        $stmt->execute([$election['election_id']]);
+                                        $total_candidates = $stmt->fetchColumn();
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <strong><?php echo htmlspecialchars($election['class_name']); ?></strong>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($election['department_name']); ?></td>
+                                            <td>
+                                                <span class="badge bg-<?php 
+                                                    echo $election['voting_status'] === 'ended' ? 'success' : 
+                                                        ($election['voting_status'] === 'active' ? 'primary' : 'secondary'); 
+                                                ?>">
+                                                    <?php echo ucfirst(str_replace('_', ' ', $election['voting_status'])); ?>
+                                                </span>
+                                            </td>
+                                            <td><span class="badge bg-info"><?php echo $total_students; ?></span></td>
+                                            <td><span class="badge bg-success"><?php echo $total_candidates; ?></span></td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <?php if ($election['voting_status'] === 'ended'): ?>
+                                                        <button class="btn btn-outline-primary" 
+                                                                onclick="generateClassReport(<?php echo $election['election_id']; ?>)"
+                                                                title="Download Class Report">
+                                                            <i class="fas fa-download me-1"></i>PDF
+                                                        </button>
+                                                        <button class="btn btn-outline-info" 
+                                                                onclick="previewClassReport(<?php echo $election['election_id']; ?>)"
+                                                                title="Preview Report">
+                                                            <i class="fas fa-eye me-1"></i>Preview
+                                                        </button>
+                                                    <?php else: ?>
+                                                        <button class="btn btn-outline-secondary" disabled>
+                                                            <i class="fas fa-clock me-1"></i>Voting Not Ended
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
     <!-- Union Elections Reports -->
     <div class="row mb-4">
         <div class="col-12">
@@ -181,6 +303,7 @@ include dirname(__DIR__) . '/includes/header.php';
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Class Elections Reports -->
     <div class="row mb-4">
         <div class="col-12">
@@ -359,6 +482,11 @@ function generateAllUnionReports() {
 }
 
 
+=======
+</div>
+
+<script>
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
 // Class Election Reports
 function generateClassReport(electionId) {
     showAlert('Generating class election report...', 'info');
@@ -377,6 +505,7 @@ function generateAllClassReports() {
     }
 }
 
+<<<<<<< HEAD
 // Sorting functionality for Class Elections table
 let sortDirection = {};
 
@@ -474,6 +603,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+=======
+
+// Union Election Reports
+function generateUnionReport(electionId) {
+    showAlert('Generating union election report...', 'info');
+    window.open(`generate_pdf.php?type=union&election_id=${electionId}`, '_blank');
+}
+
+function previewUnionReport(electionId) {
+    showAlert('Opening report preview...', 'info');
+    window.open(`preview_report.php?type=union&election_id=${electionId}`, '_blank');
+}
+
+function generateAllUnionReports() {
+    if (confirm('This will generate PDF reports for all union elections. Continue?')) {
+        showAlert('Generating all union election reports...', 'info');
+        window.open(`generate_pdf.php?type=all_union&year=<?php echo $current_year; ?>`, '_blank');
+    }
+}
+
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
 
 function showAlert(message, type) {
     // Create alert element

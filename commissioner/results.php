@@ -50,6 +50,85 @@ include dirname(__DIR__) . '/includes/header.php';
         </div>
     </div>
 
+<<<<<<< HEAD
+=======
+    <!-- Class Elections Results -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-users me-2"></i>Class Election Results
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <?php if (empty($class_elections)): ?>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No class elections found for <?php echo $current_year; ?>.
+                        </div>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Results Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($class_elections as $election): ?>
+                                        <tr>
+                                            <td>
+                                                <strong><?php echo htmlspecialchars($election['class_name']); ?></strong>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($election['department_name']); ?></td>
+                                            <td>
+                                                <span class="badge bg-<?php 
+                                                    echo $election['voting_status'] === 'ended' ? 'success' : 
+                                                        ($election['voting_status'] === 'active' ? 'primary' : 'secondary'); 
+                                                ?>">
+                                                    <?php echo ucfirst(str_replace('_', ' ', $election['voting_status'])); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-<?php echo $election['results_published'] ? 'success' : 'secondary'; ?>">
+                                                    <?php echo $election['results_published'] ? 'Published' : 'Hidden'; ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <?php if ($election['voting_status'] === 'ended'): ?>
+                                                        <a href="class_results.php?election_id=<?php echo $election['election_id']; ?>" 
+                                                           class="btn btn-outline-primary">
+                                                            View Results
+                                                        </a>
+                                                        <button class="btn btn-outline-<?php echo $election['results_published'] ? 'warning' : 'success'; ?>"
+                                                                onclick="toggleClassResults(<?php echo $election['election_id']; ?>, <?php echo $election['results_published'] ? 'false' : 'true'; ?>)">
+                                                            <?php echo $election['results_published'] ? 'Hide Results' : 'Publish Results'; ?>
+                                                        </button>
+                                                    <?php else: ?>
+                                                        <button class="btn btn-outline-secondary" disabled>
+                                                            Voting Not Ended
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
     <!-- Union Elections Results -->
     <div class="row mb-4">
         <div class="col-12">
@@ -123,6 +202,7 @@ include dirname(__DIR__) . '/includes/header.php';
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
     <!-- Class Elections Results -->
     <div class="row mb-4">
@@ -368,6 +448,11 @@ function updateSortIcons(activeColumn) {
 }
 
 
+=======
+</div>
+
+<script>
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
 function toggleClassResults(electionId, publish) {
     const action = publish ? 'publish' : 'hide';
     const confirmMessage = publish ?

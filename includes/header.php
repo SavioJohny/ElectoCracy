@@ -12,7 +12,11 @@ require_once dirname(__DIR__) . '/includes/auth.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ElectoCracy - Democratic Election Management System for transparent and secure elections">
     <meta name="keywords" content="election, democracy, voting, management, system">
+<<<<<<< HEAD
     <meta name="author" content="ElectoCracy">
+=======
+    <meta name="author" content="ElectoCracy Team">
+>>>>>>> c5c803024ac3d8dfbfce6f4beb1fca62e8b68de3
     <meta name="theme-color" content="#457B9D">
     
     <!-- Open Graph / Facebook -->
